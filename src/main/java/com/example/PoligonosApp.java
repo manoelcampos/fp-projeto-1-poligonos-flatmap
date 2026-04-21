@@ -186,27 +186,17 @@ public class PoligonosApp extends Application {
 
     protected List<Double> perimetros() {
         return pontosPoligonos.stream()
-                .flatMap(poligono -> {
-                    if (poligono.size() < 2) {
-                        return Stream.of(new Point(0, 0, 0));
-                    }
-                    List<Point> ultimoPontoPoligono = new ArrayList<>(poligono);
-                    ultimoPontoPoligono.add(poligono.get(0));
+                .flatMap(lista -> {
+                    if (lista.isEmpty()) return Stream.empty();
 
-                    Point pontoInicial = new Point(
-                            poligono.get(poligono.size() -1),
-                            poligono.get(0)
-                    );
+                    Point primeiro = lista.get(0);
+                    Point ultimo = lista.get(lista.size() - 1);
 
-                    Point resultado = ultimoPontoPoligono.stream()
-                            .skip(1)
-                            .reduce(pontoInicial, (anterior, atual) -> {
-                                Point novo = new Point(anterior, atual);
-                                return novo;
-                            });
-                    return  Stream.of(resultado);
+                    // começa ligando último -> primeiro
+                    Point resultado = lista.stream()
+                            .reduce(new Point(ultimo, primeiro), (acumulado, atual) -> new Point(acumulado, atual));
+                    return Stream.of(resultado.distance());
                 })
-                .map(Point::distance)
                 .toList();
     }
 
