@@ -188,11 +188,9 @@ public class PoligonosApp extends Application {
         return pontosPoligonos.stream()
                 .flatMap(lista -> {
                     if (lista.isEmpty()) return Stream.empty();
-
                     Point primeiro = lista.get(0);
                     Point ultimo = lista.get(lista.size() - 1);
 
-                    // começa ligando último -> primeiro
                     Point resultado = lista.stream()
                             .reduce(new Point(ultimo, primeiro), (acumulado, atual) -> new Point(acumulado, atual));
                     return Stream.of(resultado.distance());
