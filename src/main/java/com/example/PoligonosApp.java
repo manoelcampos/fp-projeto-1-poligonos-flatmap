@@ -67,10 +67,9 @@ public class PoligonosApp extends Application {
 
     /**
      * Executa a aplicação
-     * @param args
      */
-    public static void main(String[] args) {
-        launch(args);
+    void main() {
+        launch();
     }
 
     /**
